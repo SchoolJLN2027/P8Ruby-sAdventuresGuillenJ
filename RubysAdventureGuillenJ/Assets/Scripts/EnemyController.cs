@@ -7,8 +7,9 @@ public class EnemyController : MonoBehaviour
     public float speed = 3.0f;
     public bool vertical;
     public float changeTime = 3.0f;
+    bool Broken;
 
-    Rigidbody2D rigidbody2D;
+    Rigidbody2D rigidbody2d;
 
     Animator animator;
     float timer;
@@ -16,7 +17,7 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rigidbody2D = GetComponent<Rigidbody2D>();
+        rigidbody2d = GetComponent<Rigidbody2D>();
         timer = changeTime;
         animator = GetComponent<Animator>();
 
@@ -32,12 +33,16 @@ public class EnemyController : MonoBehaviour
             timer = changeTime;
         }
 
+        if (!Broken)
+        {
+            return;
+        }
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        Vector2 position = rigidbody2D.position;
+        Vector2 position = rigidbody2d.position;
 
         if (vertical)
         {
@@ -52,7 +57,7 @@ public class EnemyController : MonoBehaviour
             position.x = position.x + Time.deltaTime * speed * direction;
         }
        
-        rigidbody2D.MovePosition(position);
+        rigidbody2d.MovePosition(position);
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -62,5 +67,12 @@ public class EnemyController : MonoBehaviour
         {
             player.ChangeHealth(-1);
         }
+    }
+
+    public void Fix()
+    {
+        Broken = false;
+        rigidbody2d.simulated = false;
+        animator.SetTrigger(Fix);
     }
 }
