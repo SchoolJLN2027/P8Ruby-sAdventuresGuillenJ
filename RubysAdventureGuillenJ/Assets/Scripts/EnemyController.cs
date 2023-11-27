@@ -73,6 +73,6 @@ public class EnemyController : MonoBehaviour
     {
         Broken = false;
         rigidbody2d.simulated = false;
-        animator.SetTrigger("Fix");
+        animator.SetTrigger("Fixed");
     }
 }
