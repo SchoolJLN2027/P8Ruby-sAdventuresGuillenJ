@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CollectableHealth : MonoBehaviour
 {
+    public AudioClip collectedClip;
     // Start is called before the first frame update
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -14,6 +15,8 @@ public class CollectableHealth : MonoBehaviour
             {
                 controller.ChangeHealth(1);
                 Destroy(gameObject);
+
+                controller.PlaySound(collectedClip);
             }
             
         }
